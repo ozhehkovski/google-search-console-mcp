@@ -1,0 +1,45 @@
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:25.8
+    restart: unless-stopped
+    environment:
+      CLICKHOUSE_DB: gsc
+      CLICKHOUSE_USER: gsc
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-gsc-local-password}
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 0
+    volumes:
+      - clickhouse-data:/var/lib/clickhouse
+      - ./clickhouse/config.d/low-resources.xml:/etc/clickhouse-server/config.d/low-resources.xml:ro
+    ulimits:
+      nofile: {soft: 262144, hard: 262144}
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8123/ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  gsc-mcp:
+    container_name: gsc-mcp
+    build: .
+    image: google-search-console-mcp:latest
+    restart: unless-stopped
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      CLICKHOUSE_URL: http://clickhouse:8123
+      CLICKHOUSE_USER: gsc
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-gsc-local-password}
+      CLICKHOUSE_DB: gsc
+      PUBLIC_URL: ${PUBLIC_URL:-http://localhost:3333}
+    ports:
+      # Bound to localhost: the MCP server exposes your Search Console data
+      - "127.0.0.1:${PORT:-3333}:3333"
+    volumes:
+      - ./credentials:/app/credentials
+
+volumes:
+  clickhouse-data:

@@ -1,0 +1,52 @@
+{
+  "name": "google-search-console-mcp",
+  "version": "1.0.0",
+  "description": "Self-hosted Google Search Console MCP server: syncs your GSC data into ClickHouse and lets Claude, ChatGPT, Cursor and other AI agents answer SEO questions about it.",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ozhehkovski/google-search-console-mcp.git"
+  },
+  "homepage": "https://github.com/ozhehkovski/google-search-console-mcp#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "google-search-console",
+    "search-console",
+    "gsc",
+    "seo",
+    "claude",
+    "chatgpt",
+    "cursor",
+    "ai-agent",
+    "clickhouse",
+    "docker"
+  ],
+  "scripts": {
+    "dev": "tsx watch src/index.ts serve",
+    "build": "tsup",
+    "start": "node dist/index.js serve",
+    "sync": "node dist/index.js sync",
+    "typecheck": "tsc --noEmit -p .",
+    "test": "tsx --test 'src/**/*.test.ts'"
+  },
+  "dependencies": {
+    "@clickhouse/client": "1.11.2",
+    "@modelcontextprotocol/sdk": "1.30.1",
+    "googleapis": "153.0.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "22.16.3",
+    "tsup": "8.5.0",
+    "tsx": "4.20.3",
+    "typescript": "5.8.3"
+  }
+}
