@@ -4,6 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![MCP](https://img.shields.io/badge/Model_Context_Protocol-server-6E56CF)](https://modelcontextprotocol.io)
 [![Docker](https://img.shields.io/badge/Docker-compose-2496ED?logo=docker&logoColor=white)](docker-compose.yml)
+[![M8ven Verified](https://m8ven.ai/badge/mcp/ozhehkovski-google-search-console-mcp-2nbdik?variant=verified)](https://m8ven.ai/mcp/ozhehkovski-google-search-console-mcp-2nbdik?s=readme)
 
 **Self-hosted [MCP](https://modelcontextprotocol.io) server for Google Search Console.** It syncs your
 Search Console performance data (clicks, impressions, CTR, positions by query, page, country and device)
